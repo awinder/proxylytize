@@ -1,0 +1,17 @@
+{
+  "Name": "proxylytize",
+  "Tags": [
+    "proxylytize"
+    {{range $index, $service := services}}
+      {{if in $service.Tags "http"}},"{{$service.Name}}"{{end}}
+    {{end}}
+  ],
+  "Address": "{{env "HOST_IP"}}",
+  "Port": {{env "HOST_PORT"}},
+  "Check": {
+    "http": "http://{{env "HOST_IP"}}:{{env "HOST_PORT"}}/health",
+    "id": "proxylytize-check",
+    "name": "Proxylytize check every 10s",
+    "Interval": "10s"
+  }
+}
